@@ -1,5 +1,5 @@
 {
-  "name": "microservice-a",
+  "name": "microservice-b",
   "version": "1.0.0",
   "description": "",
   "main": "handler.js",
@@ -7,9 +7,5 @@
     "test": "echo \"OK\" && exit 0"
   },
   "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "lint": "^0.7.0",
-    "serverless": "^2.21.1"
-  }
+  "license": "ISC"
 }

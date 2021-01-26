@@ -15,11 +15,10 @@ version: 0.2
 
 phases:
   install:
+    runtime-versions:
+      nodejs: 12
     commands:
       - echo "Install phase"
-      - pip install --upgrade pip
-      - pip install pipenv
-      - pipenv install awscli aws-sam-cli
       - node -v
       - npm -v
       - cd simpleApp

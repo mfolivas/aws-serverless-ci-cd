@@ -19,7 +19,7 @@ aws ssm put-parameter \
     --name "/service/demo-cicd-pipeline/github/repo" \
     --description "Github Repository name for Cloudformation Stack demo-cicd-pipeline" \
     --type "String" \
-    --value "GITHUB_REPO_NAME"
+    --value "aws-serverless-ci-cd"
 
 aws ssm put-parameter \
     --name " /service/demo-cicd-pipeline/github/token" \
@@ -31,13 +31,13 @@ aws ssm put-parameter \
     --name "/service/demo-cicd-pipeline/github/user" \
     --description "Github Username for Cloudformation Stack demo-cicd-pipeline" \
     --type "String" \
-    --value "GITHUB_USER"
+    --value "mfolivas"
 
 aws ssm put-parameter \
     --name "/service/demo-cicd-pipeline/lambda/name" \
     --description "Name of the Lambda functions that will be used to run tesets on the demo-cicd-pipeline" \
     --type "String" \
-    --value "LAMBDANAME"
+    --value "microservice-a-dev-hello"
 ```
 
 **NOTE:** Keep in mind that these Parameters will only be available within the same region you're deploying this Pipeline stack. Also, if these values ever change you will need to [update these parameters](https://docs.aws.amazon.com/cli/latest/reference/ssm/put-parameter.html) as well as update the "aws-test-pipepelines-pipeline-pipeline" Cloudformation stack.

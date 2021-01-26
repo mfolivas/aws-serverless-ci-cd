@@ -34,6 +34,10 @@ Parameters:
     Type: AWS::SSM::Parameter::Value<String>
     Default: /service/demo-cicd-pipeline/lambda/name
 
+  IntegrationBranchName:
+    Description: Name of the lambda function that will be used for running integration tests
+    Type: String
+    Default: develop
 Resources:
   
   # CodeBuild project and resources (S3 Bucket for build artifacts, Role, Project)
@@ -72,7 +76,7 @@ Resources:
       ServiceRole: !GetAtt CodeBuildServiceRole.Arn
       Source:
         Type: CODEPIPELINE
-        BuildSpec: simpleApp/buildspec.yaml
+        BuildSpec: microservice-a/buildspec.yaml
       Tags:
         - Key: "Stack"
           Value: !Ref AWS::StackName
@@ -101,7 +105,7 @@ Resources:
               Configuration:
                 Owner: !Ref GithubUser
                 Repo: !Ref GithubRepo
-                Branch: master
+                Branch: !Ref IntegrationBranchName
                 OAuthToken: !Ref GithubToken
               OutputArtifacts:
                 - Name: SourceCodeAsZip

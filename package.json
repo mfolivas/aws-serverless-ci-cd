@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/mfolivas/aws-serverless-ci-cd#readme",
   "dependencies": {
+    "lint": "^0.7.0",
     "serverless": "^2.21.1"
   }
 }
