@@ -1,7 +1,7 @@
 AWSTemplateFormatVersion: 2010-09-09
 Description: >
 
-  This template generates a generic 2-environment CI/CD Pipeline for Serverless Apps that use SAM (Serverless Application Model).
+  This template generates a generic 2-environment CI/CD Pipeline for Serverless Apps that use serverless framework
 
   Charges may apply for AWS Services utilized - Below are a summary for your convenience:
 
@@ -35,14 +35,7 @@ Parameters:
     Default: /service/demo-cicd-pipeline/lambda/name
 
 Resources:
-  ######   #######  ##     ## ########   ######  ########
-  ##    ## ##     ## ##     ## ##     ## ##    ## ##
-  ##       ##     ## ##     ## ##     ## ##       ##
-  ######  ##     ## ##     ## ########  ##       ######
-  ## ##     ## ##     ## ##   ##   ##       ##
-  ##    ## ##     ## ##     ## ##    ##  ##    ## ##
-  ######   #######   #######  ##     ##  ######  ########
-
+  
   # CodeBuild project and resources (S3 Bucket for build artifacts, Role, Project)
   BuildArtifactsBucket:
     Type: AWS::S3::Bucket
@@ -58,14 +51,7 @@ Resources:
           Value: demo-cicd-codepipeline
     DeletionPolicy: Retain
 
-  ########  ##     ## #### ##       ########
-  ##     ## ##     ##  ##  ##       ##     ##
-  ##     ## ##     ##  ##  ##       ##     ##
-  ########  ##     ##  ##  ##       ##     ##
-  ##     ## ##     ##  ##  ##       ##     ##
-  ##     ## ##     ##  ##  ##       ##     ##
-  ########   #######  #### ######## ########
-
+  
   CodeBuildProject:
     Type: AWS::CodeBuild::Project
     Properties:
@@ -93,14 +79,7 @@ Resources:
         - Key: "Project"
           Value: demo-cicd-codepipeline
 
-  ########  #### ########  ######## ##       #### ##    ## ########
-  ##     ##  ##  ##     ## ##       ##        ##  ###   ## ##
-  ##     ##  ##  ##     ## ##       ##        ##  ####  ## ##
-  ########   ##  ########  ######   ##        ##  ## ## ## ######
-  ##         ##  ##        ##       ##        ##  ##  #### ##
-  ##         ##  ##        ##       ##        ##  ##   ### ##
-  ##        #### ##        ######## ######## #### ##    ## ########
-
+  
   Pipeline:
     Type: AWS::CodePipeline::Pipeline
     Properties:
@@ -234,13 +213,6 @@ Resources:
                 - Name: demo-cicd-codepipelineProdChangeSet
               RunOrder: 3
 
-  ####    ###    ##     ##
-  ##    ## ##   ###   ###
-  ##   ##   ##  #### ####
-  ##  ##     ## ## ### ##
-  ##  ######### ##     ##
-  ##  ##     ## ##     ##
-  #### ##     ## ##     ##
 
   CodeBuildServiceRole:
     Type: AWS::IAM::Role
