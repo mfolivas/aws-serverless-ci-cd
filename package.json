@@ -1,0 +1,22 @@
+{
+  "name": "aws-serverless-ci-cd",
+  "version": "1.0.0",
+  "description": "Allow to deploy a ci/cd application using a mono-repo composed of two serverless applications.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mfolivas/aws-serverless-ci-cd.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mfolivas/aws-serverless-ci-cd/issues"
+  },
+  "homepage": "https://github.com/mfolivas/aws-serverless-ci-cd#readme",
+  "dependencies": {
+    "serverless": "^2.21.1"
+  }
+}
