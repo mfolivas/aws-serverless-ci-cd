@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "precloudformation": "cfn-lint pipeline/pipeline.yml && aws cloudformation validate-template --template-body file://pipeline/pipeline.yml",
-    "cloudformation": "aws cloudformation deploy --template-file pipeline/pipeline.yml --stack-name aws-serverless-ci-cd --capabilities CAPABILITY_IAM --no-fail-on-empty-changeset"
+    "cloudformation": "aws cloudformation deploy --template-file pipeline/pipeline.yml --stack-name aws-serverless-ci-cd --capabilities CAPABILITY_IAM --no-fail-on-empty-changeset",
+    "deploy": "npm run precloudformation && npm run cloudformation"
   },
   "repository": {
     "type": "git",

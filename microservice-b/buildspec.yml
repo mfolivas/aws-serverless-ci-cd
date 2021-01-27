@@ -1,0 +1,24 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      nodejs: 12
+    commands:
+      - echo "Install phase"
+      - node --version
+      - npm --version
+      - npm ci
+  pre_build:
+    commands:
+      - echo "Pre-build phase"
+      - npm run test
+  build:
+    commands:
+      - echo "Build phase"
+      - npm run build
+      - npm run deploy
+      - npm run integration-test
+  post_build:
+    commands:
+      - npm run smoke-test
