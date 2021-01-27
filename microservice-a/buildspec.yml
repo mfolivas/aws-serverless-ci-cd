@@ -12,6 +12,7 @@ phases:
   pre_build:
     commands:
       - echo "Pre-build phase"
+      - cd microservice-a
       - npm run test
   build:
     commands:

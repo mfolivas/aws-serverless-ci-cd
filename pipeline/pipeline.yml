@@ -35,7 +35,7 @@ Parameters:
     Default: /service/demo-cicd-pipeline/lambda/name
 
   IntegrationBranchName:
-    Description: Name of the lambda function that will be used for running integration tests
+    Description: Name of the branch that will be used as the integration branch (develop)
     Type: String
     Default: develop
 Resources:
