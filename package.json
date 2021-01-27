@@ -4,7 +4,8 @@
   "description": "Allow to deploy a ci/cd application using a mono-repo composed of two serverless applications.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "precloudformation": "cfn-lint pipeline/pipeline.yml && aws cloudformation validate-template --template-body file://pipeline/pipeline.yml",
+    "cloudformation": "aws cloudformation deploy --template-file pipeline/pipeline.yml --stack-name aws-serverless-ci-cd --capabilities CAPABILITY_IAM --no-fail-on-empty-changeset"
   },
   "repository": {
     "type": "git",
@@ -19,5 +20,6 @@
   "dependencies": {
     "lint": "^0.7.0",
     "serverless": "^2.21.1"
-  }
+  },
+  "devDependencies": {}
 }
