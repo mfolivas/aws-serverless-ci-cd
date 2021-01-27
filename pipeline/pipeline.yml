@@ -76,7 +76,7 @@ Resources:
       ServiceRole: !GetAtt CodeBuildServiceRole.Arn
       Source:
         Type: CODEPIPELINE
-        BuildSpec: microservice-a/buildspec.yaml
+        BuildSpec: microservice-a/buildspec.yml
       Tags:
         - Key: "Stack"
           Value: !Ref AWS::StackName
