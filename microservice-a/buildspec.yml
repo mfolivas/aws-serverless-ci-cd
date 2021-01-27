@@ -17,6 +17,7 @@ phases:
     commands:
       - echo "Build phase"
       - npm run build
+      - npm run deploy
       - npm run integration-test
   post_build:
     commands:
