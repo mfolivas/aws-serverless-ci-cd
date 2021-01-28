@@ -16,6 +16,7 @@
   "dependencies": {
     "eslint": "^7.18.0",
     "lint": "^0.7.0",
-    "serverless": "^2.21.1"
+    "serverless": "^2.21.1",
+    "webpack": "^5.18.0"
   }
 }
