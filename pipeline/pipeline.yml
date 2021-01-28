@@ -29,10 +29,10 @@ Parameters:
     Type: AWS::SSM::Parameter::Value<String>
     Default: /service/demo-cicd-pipeline/github/user
 
-  IntegrationTestLambda:
-    Description: Name of the lambda function that will be used for running integration tests
-    Type: String
-    Default: microservice-a-dev-hello
+  # IntegrationTestLambda:
+  #   Description: Name of the lambda function that will be used for running integration tests
+  #   Type: String
+  #   Default: microservice-a-dev-hello
 
   IntegrationBranchName:
     Description: Name of the branch that will be used as the integration branch (develop)
@@ -168,7 +168,8 @@ Resources:
                 Provider: Lambda
                 Version: "1"
               Configuration:
-                FunctionName: !Ref IntegrationTestLambda # integration-test-lambda-HelloWorldFunction-7B8Z9SLEFTQU
+                FunctionName: "microservice-a-dev-hello" # integration-test-lambda-HelloWorldFunction-7B8Z9SLEFTQU
+                UserParameters: Hello
               OutputArtifacts: []
               InputArtifacts: []
               Region: us-east-1
