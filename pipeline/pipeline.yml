@@ -31,8 +31,8 @@ Parameters:
 
   IntegrationTestLambda:
     Description: Name of the lambda function that will be used for running integration tests
-    Type: AWS::SSM::Parameter::Value<String>
-    Default: /service/demo-cicd-pipeline/lambda/name
+    Type: String
+    Default: microservice-a-dev-hello
 
   IntegrationBranchName:
     Description: Name of the branch that will be used as the integration branch (develop)
@@ -126,41 +126,41 @@ Resources:
                 - Name: BuildArtifactAsZip
         - Name: Stage
           Actions:
-        #     - Name: CreateChangeSet
-        #       ActionTypeId:
-        #         Category: Deploy
-        #         Owner: AWS
-        #         Provider: CloudFormation
-        #         Version: "1"
-        #       Configuration:
-        #         # More info on Possible Values for Cloudformation: https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/continuous-delivery-codepipeline-action-reference.html#w2ab2c13c13b9
-        #         ActionMode: CHANGE_SET_REPLACE
-        #         RoleArn: !GetAtt CloudFormationExecutionRole.Arn
-        #         StackName: demo-cicd-codepipeline-Stage
-        #         ChangeSetName: demo-cicd-codepipeline-ChangeSet-Stage
-        #         TemplatePath: BuildArtifactAsZip::packaged.yml
-        #         Capabilities: CAPABILITY_IAM
-        #         ParameterOverrides: |
-        #           {
-        #             "MyEnvironment" : "staging"
-        #           }
-        #       InputArtifacts:
-        #         - Name: BuildArtifactAsZip
-        #       RunOrder: 1
-        #     - Name: ExecuteChangeSet
-        #       ActionTypeId:
-        #         Category: Deploy
-        #         Owner: AWS
-        #         Provider: CloudFormation
-        #         Version: "1"
-        #       Configuration:
-        #         ActionMode: CHANGE_SET_EXECUTE
-        #         RoleArn: !GetAtt CloudFormationExecutionRole.Arn
-        #         StackName: demo-cicd-codepipeline-Stage
-        #         ChangeSetName: demo-cicd-codepipeline-ChangeSet-Stage
-        #       OutputArtifacts:
-        #         - Name: demo-cicd-codepipelineStageChangeSet
-        #       RunOrder: 2
+            # - Name: CreateChangeSet
+            #   ActionTypeId:
+            #     Category: Deploy
+            #     Owner: AWS
+            #     Provider: CloudFormation
+            #     Version: "1"
+            #   Configuration:
+            #     # More info on Possible Values for Cloudformation: https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/continuous-delivery-codepipeline-action-reference.html#w2ab2c13c13b9
+            #     ActionMode: CHANGE_SET_REPLACE
+            #     RoleArn: !GetAtt CloudFormationExecutionRole.Arn
+            #     StackName: demo-cicd-codepipeline-Stage
+            #     ChangeSetName: demo-cicd-codepipeline-ChangeSet-Stage
+            #     TemplatePath: BuildArtifactAsZip::packaged.yml
+            #     Capabilities: CAPABILITY_IAM
+            #     ParameterOverrides: |
+            #       {
+            #         "MyEnvironment" : "staging"
+            #       }
+            #   InputArtifacts:
+            #     - Name: BuildArtifactAsZip
+            #   RunOrder: 1
+            # - Name: ExecuteChangeSet
+            #   ActionTypeId:
+            #     Category: Deploy
+            #     Owner: AWS
+            #     Provider: CloudFormation
+            #     Version: "1"
+            #   Configuration:
+            #     ActionMode: CHANGE_SET_EXECUTE
+            #     RoleArn: !GetAtt CloudFormationExecutionRole.Arn
+            #     StackName: demo-cicd-codepipeline-Stage
+            #     ChangeSetName: demo-cicd-codepipeline-ChangeSet-Stage
+            #   OutputArtifacts:
+            #     - Name: demo-cicd-codepipelineStageChangeSet
+            #   RunOrder: 2
             - Name: LamdbaRunTests #https://docs.aws.amazon.com/codepipeline/latest/userguide/action-reference-Lambda.html
               ActionTypeId:
                 Category: Invoke
