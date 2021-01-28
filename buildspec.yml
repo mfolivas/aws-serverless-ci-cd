@@ -11,6 +11,7 @@ phases:
       - git --version
   build:
     commands:
+      - chmod a+x deploy.sh
       - ./deploy.sh
 
 cache:

@@ -8,12 +8,6 @@ export EMPTY_PROFILE=''
 
 export CI='true'
 
-# Uncomment for debugging.
-# export SLS_DEBUG="*"
-# export AWSJS_DEBUG="*"
-
-# Stage is defined in the Cloudformation stack.
-# https://github.com/tikdcom/devops/blob/master/cloudformation.yml
 echo "Stage: ${STAGE}"
 
 check() {
@@ -38,6 +32,9 @@ deploy() {
 check microservice-a
 check microservice-b
 
+# Running test as long as we're in stage
+test microservice-a
+test microservice-b
 
 # Deploy all projects
 deploy microservice-a
