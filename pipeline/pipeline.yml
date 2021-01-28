@@ -56,7 +56,7 @@ Resources:
     DeletionPolicy: Retain
 
   
-  CodeBuildProject:
+  MicroserviceAProject:
     Type: AWS::CodeBuild::Project
     Properties:
       Name: demo-cicd-codepipeline
@@ -119,7 +119,7 @@ Resources:
                 Provider: CodeBuild
                 Version: "1"
               Configuration:
-                ProjectName: !Ref CodeBuildProject
+                ProjectName: !Ref MicroserviceAProject
               InputArtifacts:
                 - Name: SourceCodeAsZip
               OutputArtifacts:
@@ -318,7 +318,7 @@ Resources:
                   - "codebuild:StartBuild"
                   - "codebuild:BatchGetBuilds"
                 Resource:
-                  - !Sub "arn:aws:codebuild:${AWS::Region}:${AWS::AccountId}:project/${CodeBuildProject}"
+                  - !Sub "arn:aws:codebuild:${AWS::Region}:${AWS::AccountId}:project/${MicroserviceAProject}"
               - Effect: Allow
                 Action:
                   - "cloudformation:CreateStack"
@@ -349,9 +349,9 @@ Outputs:
     Description: Amazon S3 Bucket for Pipeline and Build artifacts
     Value: !Ref BuildArtifactsBucket
 
-  CodeBuildProject:
+  MicroserviceAProject:
     Description: CodeBuild Project name
-    Value: !Ref CodeBuildProject
+    Value: !Ref MicroserviceAProject
 
   CodePipeline:
     Description: AWS CodePipeline pipeline name
