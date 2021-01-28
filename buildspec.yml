@@ -16,6 +16,6 @@ phases:
 
 cache:
   paths:
-    # - 'microservice-a/node_modules/**/*'
-    # - 'microservice-b/node_modules/**/*'
+    - 'microservice-a/node_modules/**/*'
+    - 'microservice-b/node_modules/**/*'
     
