@@ -1,11 +1,20 @@
 {
-  "name": "microservice-b",
+  "name": "microservice-a",
   "version": "1.0.0",
   "description": "",
   "main": "handler.js",
   "scripts": {
-    "test": "echo \"OK\" && exit 0"
+    "lint": "echo \"LINT OK\" && exit 0",
+    "test": "echo \"TEST OK\" && exit 0",
+    "build": "sls package",
+    "deploy": "sls deploy --verbose",
+    "integration-test": "echo \"OK\" && exit 0",
+    "smoke-test": "sls invoke -f hello"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "lint": "^0.7.0",
+    "serverless": "^2.21.1"
+  }
 }

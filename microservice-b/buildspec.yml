@@ -13,12 +13,17 @@ phases:
     commands:
       - echo "Pre-build phase"
       - npm run test
+      - echo "Logging in to Amazon ECR..."
+      # - aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login --username AWS --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com
+      # - docker tag $IMAGE_REPO_NAME:$IMAGE_TAG $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:$IMAGE_TAG      
   build:
     commands:
       - echo "Build phase"
+      # - docker build -t $IMAGE_REPO_NAME:$IMAGE_TAG .
       - npm run build
       - npm run deploy
       - npm run integration-test
   post_build:
     commands:
-      - npm run smoke-test
+      - echo "Publishing the Docker image"
+      # - docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:$IMAGE_TAG
