@@ -124,8 +124,8 @@ Resources:
                 - Name: SourceCodeAsZip
               OutputArtifacts:
                 - Name: BuildArtifactAsZip
-        # - Name: Stage
-        #   Actions:
+        - Name: Stage
+          Actions:
         #     - Name: CreateChangeSet
         #       ActionTypeId:
         #         Category: Deploy
