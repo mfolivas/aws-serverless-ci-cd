@@ -18,7 +18,8 @@ test() {
   # Execute tests only when deploying to DEV.
   if [[ $STAGE == "dev" ]]
   then
-    source .envrc && npm test
+    # source .envrc && npm test
+    npm test
   fi
 }
 
