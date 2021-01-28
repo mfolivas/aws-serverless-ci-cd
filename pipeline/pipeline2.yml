@@ -1,0 +1,145 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: Stack for the Fleet Management project.
+
+Resources:
+  # ServerlessCiCdDevProject:
+  #   Type: AWS::CodeBuild::Project
+  #   Properties:
+  #     Name: aws-serverless-ci-cd-dev
+  #     Description: Deployment for the aws-serverless-ci-cd dev environment
+  #     Environment:
+  #       ComputeType: BUILD_GENERAL1_SMALL
+  #       ImagePullCredentialsType: CODEBUILD
+  #       PrivilegedMode: false
+  #       Image: aws/codebuild/standard:2.0
+  #       Type: LINUX_CONTAINER
+  #       EnvironmentVariables:
+  #         - Name: STAGE
+  #           Type: PLAINTEXT
+  #           Value: dev
+  #     Artifacts:
+  #       Type: NO_ARTIFACTS
+  #     BadgeEnabled: true
+  #     ServiceRole: !Ref CodeBuildServiceRole
+  #     Source:
+  #       BuildSpec: buildspec.yml
+  #       GitCloneDepth: 1
+  #       Location: https://github.com/mfolivas/aws-serverless-ci-cd.git
+  #       ReportBuildStatus: true
+  #       Type: GITHUB
+  #     TimeoutInMinutes: 60
+  #     Triggers:
+  #       Webhook: true
+  #       FilterGroups:
+  #         - - Type: EVENT
+  #             Pattern: PUSH
+  #           - Type: HEAD_REF
+  #             Pattern: ^refs/heads/develop
+  #     Cache:
+  #       Type: LOCAL
+  #       Modes:
+  #         - LOCAL_CUSTOM_CACHE
+
+  # FleetManagementAPIProdProject:
+  #   Type: AWS::CodeBuild::Project
+  #   Properties:
+  #     Name: fleetmanagement-api-prod
+  #     Description: Deploys fleetmanagement-api projects to prod environments.
+  #     Environment:
+  #       ComputeType: BUILD_GENERAL1_SMALL
+  #       ImagePullCredentialsType: CODEBUILD
+  #       PrivilegedMode: false
+  #       Image: aws/codebuild/standard:2.0
+  #       Type: LINUX_CONTAINER
+  #       EnvironmentVariables:
+  #         - Name: STAGE
+  #           Type: PLAINTEXT
+  #           Value: prod
+  #         - Name: GARAGE_WEBSITE_BUCKET_NAME
+  #           Type: PLAINTEXT
+  #           Value: garage-website-prod
+  #     Artifacts:
+  #       Type: NO_ARTIFACTS
+  #     BadgeEnabled: true
+  #     ServiceRole: !Ref CodeBuildServiceRole
+  #     Source:
+  #       BuildSpec: buildspec.yml
+  #       GitCloneDepth: 1
+  #       Location: https://github.com/tikdcom/fleetmanagement-api.git
+  #       ReportBuildStatus: true
+  #       Type: GITHUB
+  #     TimeoutInMinutes: 60
+  #     Triggers:
+  #       Webhook: true
+  #       FilterGroups:
+  #         - - Type: EVENT
+  #             Pattern: PUSH
+  #           - Type: HEAD_REF
+  #             Pattern: ^refs/heads/master
+  #     Cache:
+  #       Type: LOCAL
+  #       Modes:
+  #         - LOCAL_CUSTOM_CACHE
+  
+  MicroserviceAProject:
+    Type: AWS::CodeBuild::Project
+    Properties:
+      Name: microservice-a-project
+      Description: Microservice-a project
+      Environment:
+        ComputeType: BUILD_GENERAL1_SMALL
+        ImagePullCredentialsType: CODEBUILD
+        PrivilegedMode: false
+        Image: aws/codebuild/standard:2.0
+        Type: LINUX_CONTAINER
+      Artifacts:
+        Type: NO_ARTIFACTS
+      BadgeEnabled: true
+      ServiceRole: !Ref CodeBuildServiceRole
+      Source:
+        BuildSpec: microservice-a/buildspec.yml
+        GitCloneDepth: 1
+        Location: https://github.com/mfolivas/aws-serverless-ci-cd.git
+        ReportBuildStatus: true
+        Type: GITHUB
+      TimeoutInMinutes: 60
+      Triggers:
+        Webhook: true
+        FilterGroups:
+          - - Type: EVENT
+              Pattern: PUSH
+            - Type: HEAD_REF
+              Pattern: ^refs/heads/(develop|master)
+              ExcludeMatchedPattern: true
+  
+  CodeBuildServiceRole:
+    Type: AWS::IAM::Role
+    Properties:
+      Path: /
+      AssumeRolePolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: codebuild.amazonaws.com
+            Action: sts:AssumeRole
+      Policies:
+        - PolicyName: root
+          PolicyDocument:
+            Version: 2012-10-17
+            Statement:
+              - Resource: "*"
+                Effect: Allow
+                Action:
+                  - apigateway:*
+                  - cloudformation:*
+                  - cloudwatch:*
+                  - dynamodb:*
+                  - events:*
+                  - iam:*
+                  - lambda:*
+                  - logs:*
+                  - s3:*
+                  - sns:*
+                  - sqs:*
+                  - ssm:*

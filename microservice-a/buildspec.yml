@@ -13,6 +13,7 @@ phases:
       - echo "Pre-build phase"
       - cd microservice-a
       - npm ci
+      - npm run lint
       - npm run test
   build:
     commands:
