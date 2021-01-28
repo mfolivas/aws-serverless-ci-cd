@@ -2,95 +2,99 @@ AWSTemplateFormatVersion: "2010-09-09"
 Description: Stack for the Fleet Management project.
 
 Resources:
-  # ServerlessCiCdDevProject:
-  #   Type: AWS::CodeBuild::Project
-  #   Properties:
-  #     Name: aws-serverless-ci-cd-dev
-  #     Description: Deployment for the aws-serverless-ci-cd dev environment
-  #     Environment:
-  #       ComputeType: BUILD_GENERAL1_SMALL
-  #       ImagePullCredentialsType: CODEBUILD
-  #       PrivilegedMode: false
-  #       Image: aws/codebuild/standard:2.0
-  #       Type: LINUX_CONTAINER
-  #       EnvironmentVariables:
-  #         - Name: STAGE
-  #           Type: PLAINTEXT
-  #           Value: dev
-  #     Artifacts:
-  #       Type: NO_ARTIFACTS
-  #     BadgeEnabled: true
-  #     ServiceRole: !Ref CodeBuildServiceRole
-  #     Source:
-  #       BuildSpec: buildspec.yml
-  #       GitCloneDepth: 1
-  #       Location: https://github.com/mfolivas/aws-serverless-ci-cd.git
-  #       ReportBuildStatus: true
-  #       Type: GITHUB
-  #     TimeoutInMinutes: 60
-  #     Triggers:
-  #       Webhook: true
-  #       FilterGroups:
-  #         - - Type: EVENT
-  #             Pattern: PUSH
-  #           - Type: HEAD_REF
-  #             Pattern: ^refs/heads/develop
-  #     Cache:
-  #       Type: LOCAL
-  #       Modes:
-  #         - LOCAL_CUSTOM_CACHE
-
-  # FleetManagementAPIProdProject:
-  #   Type: AWS::CodeBuild::Project
-  #   Properties:
-  #     Name: fleetmanagement-api-prod
-  #     Description: Deploys fleetmanagement-api projects to prod environments.
-  #     Environment:
-  #       ComputeType: BUILD_GENERAL1_SMALL
-  #       ImagePullCredentialsType: CODEBUILD
-  #       PrivilegedMode: false
-  #       Image: aws/codebuild/standard:2.0
-  #       Type: LINUX_CONTAINER
-  #       EnvironmentVariables:
-  #         - Name: STAGE
-  #           Type: PLAINTEXT
-  #           Value: prod
-  #         - Name: GARAGE_WEBSITE_BUCKET_NAME
-  #           Type: PLAINTEXT
-  #           Value: garage-website-prod
-  #     Artifacts:
-  #       Type: NO_ARTIFACTS
-  #     BadgeEnabled: true
-  #     ServiceRole: !Ref CodeBuildServiceRole
-  #     Source:
-  #       BuildSpec: buildspec.yml
-  #       GitCloneDepth: 1
-  #       Location: https://github.com/tikdcom/fleetmanagement-api.git
-  #       ReportBuildStatus: true
-  #       Type: GITHUB
-  #     TimeoutInMinutes: 60
-  #     Triggers:
-  #       Webhook: true
-  #       FilterGroups:
-  #         - - Type: EVENT
-  #             Pattern: PUSH
-  #           - Type: HEAD_REF
-  #             Pattern: ^refs/heads/master
-  #     Cache:
-  #       Type: LOCAL
-  #       Modes:
-  #         - LOCAL_CUSTOM_CACHE
-  
-  MicroserviceAProject:
+  FleetManagementAPIDevProject:
     Type: AWS::CodeBuild::Project
     Properties:
-      Name: microservice-a-project
-      Description: Microservice-a project
+      Name: fleetmanagement-api-dev
+      Description: Deploys fleetmanagement-api projects to dev environments.
       Environment:
         ComputeType: BUILD_GENERAL1_SMALL
         ImagePullCredentialsType: CODEBUILD
         PrivilegedMode: false
-        Image: aws/codebuild/standard:2.0
+        Image: aws/codebuild/amazonlinux2-x86_64-standard:3.0 #aws/codebuild/python:3.6.5 # More info on Images: https://docs.aws.amazon.com/codebuild/latest/userguide/build-env-ref-available.html
+        Type: LINUX_CONTAINER
+        EnvironmentVariables:
+          - Name: STAGE
+            Type: PLAINTEXT
+            Value: dev
+          - Name: GARAGE_WEBSITE_BUCKET_NAME
+            Type: PLAINTEXT
+            Value: garage-website-dev
+          
+      Artifacts:
+        Type: NO_ARTIFACTS
+      BadgeEnabled: true
+      ServiceRole: !Ref CodeBuildServiceRole
+      Source:
+        BuildSpec: buildspec.yml
+        GitCloneDepth: 1
+        Location: https://github.com/mfolivas/aws-serverless-ci-cd.git
+        ReportBuildStatus: true
+        Type: GITHUB
+      TimeoutInMinutes: 60
+      Triggers:
+        Webhook: true
+        FilterGroups:
+          - - Type: EVENT
+              Pattern: PUSH
+            - Type: HEAD_REF
+              Pattern: ^refs/heads/develop
+      Cache:
+        Type: LOCAL
+        Modes:
+          - LOCAL_CUSTOM_CACHE
+
+  FleetManagementAPIProdProject:
+    Type: AWS::CodeBuild::Project
+    Properties:
+      Name: fleetmanagement-api-prod
+      Description: Deploys fleetmanagement-api projects to prod environments.
+      Environment:
+        ComputeType: BUILD_GENERAL1_SMALL
+        ImagePullCredentialsType: CODEBUILD
+        PrivilegedMode: false
+        Image: aws/codebuild/amazonlinux2-x86_64-standard:3.0 #aws/codebuild/python:3.6.5 # More info on Images: https://docs.aws.amazon.com/codebuild/latest/userguide/build-env-ref-available.html
+        Type: LINUX_CONTAINER
+        EnvironmentVariables:
+          - Name: STAGE
+            Type: PLAINTEXT
+            Value: prod
+          - Name: GARAGE_WEBSITE_BUCKET_NAME
+            Type: PLAINTEXT
+            Value: garage-website-prod
+      Artifacts:
+        Type: NO_ARTIFACTS
+      BadgeEnabled: true
+      ServiceRole: !Ref CodeBuildServiceRole
+      Source:
+        BuildSpec: buildspec.yml
+        GitCloneDepth: 1
+        Location: https://github.com/mfolivas/aws-serverless-ci-cd.git
+        ReportBuildStatus: true
+        Type: GITHUB
+      TimeoutInMinutes: 60
+      Triggers:
+        Webhook: true
+        FilterGroups:
+          - - Type: EVENT
+              Pattern: PUSH
+            - Type: HEAD_REF
+              Pattern: ^refs/heads/master
+      Cache:
+        Type: LOCAL
+        Modes:
+          - LOCAL_CUSTOM_CACHE
+  
+  CommonProject:
+    Type: AWS::CodeBuild::Project
+    Properties:
+      Name: ci-common
+      Description: Common
+      Environment:
+        ComputeType: BUILD_GENERAL1_SMALL
+        ImagePullCredentialsType: CODEBUILD
+        PrivilegedMode: false
+        Image: aws/codebuild/amazonlinux2-x86_64-standard:3.0 #aws/codebuild/python:3.6.5 # More info on Images: https://docs.aws.amazon.com/codebuild/latest/userguide/build-env-ref-available.html
         Type: LINUX_CONTAINER
       Artifacts:
         Type: NO_ARTIFACTS

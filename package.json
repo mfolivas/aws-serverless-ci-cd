@@ -6,6 +6,7 @@
   "scripts": {  
     "precloudformation": "cfn-lint pipeline/pipeline2.yml && aws cloudformation validate-template --template-body file://pipeline/pipeline2.yml",
     "cloudformation": "aws cloudformation deploy --template-file pipeline/pipeline2.yml --stack-name aws-serverless-ci-cd --capabilities CAPABILITY_IAM --no-fail-on-empty-changeset",
+
     "deploy": "npm run precloudformation && npm run cloudformation"
   },
   "repository": {
