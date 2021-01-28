@@ -1,0 +1,21 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      nodejs: 12
+    commands:
+      - node --version
+      - npm --version
+      - aws --version
+      - git --version
+  build:
+    commands:
+      - chmod a+x deploy.sh
+      - ./deploy.sh
+
+cache:
+  paths:
+    - 'microservice-a/node_modules/**/*'
+    - 'microservice-b/node_modules/**/*'
+    

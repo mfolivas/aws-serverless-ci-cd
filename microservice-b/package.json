@@ -1,0 +1,11 @@
+{
+  "name": "microservice-b",
+  "version": "1.0.0",
+  "description": "",
+  "main": "handler.js",
+  "scripts": {
+    "test": "echo \"OK\" && exit 0"
+  },
+  "author": "",
+  "license": "ISC"
+}
