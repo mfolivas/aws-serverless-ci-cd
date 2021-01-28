@@ -2,6 +2,85 @@ AWSTemplateFormatVersion: "2010-09-09"
 Description: Stack for the aws serverless ci cd project.
 
 Resources:
+
+
+#   __  __ _                                    _               
+#  |  \/  (_) ___ _ __ ___  ___  ___ _ ____   _(_) ___ ___  ___ 
+#  | |\/| | |/ __| '__/ _ \/ __|/ _ \ '__\ \ / / |/ __/ _ \/ __|
+#  | |  | | | (__| | | (_) \__ \  __/ |   \ V /| | (_|  __/\__ \
+#  |_|  |_|_|\___|_|  \___/|___/\___|_|    \_/ |_|\___\___||___/
+                                                              
+                                                  
+  MicroserviceADev:
+    Type: AWS::CodeBuild::Project
+    Properties:
+      Name: microservice-a-dev
+      Description: microservice-a-dev
+      Environment:
+        ComputeType: BUILD_GENERAL1_SMALL
+        ImagePullCredentialsType: CODEBUILD
+        PrivilegedMode: false
+        Image: aws/codebuild/amazonlinux2-x86_64-standard:3.0 #aws/codebuild/python:3.6.5 # More info on Images: https://docs.aws.amazon.com/codebuild/latest/userguide/build-env-ref-available.html
+        Type: LINUX_CONTAINER
+      Artifacts:
+        Type: NO_ARTIFACTS
+      BadgeEnabled: true
+      ServiceRole: !Ref CodeBuildServiceRole
+      Source:
+        BuildSpec: microservice-a/buildspec.yml
+        GitCloneDepth: 1
+        Location: https://github.com/mfolivas/aws-serverless-ci-cd.git
+        ReportBuildStatus: true
+        Type: GITHUB
+      TimeoutInMinutes: 60
+      Triggers:
+        Webhook: true
+        FilterGroups:
+          - - Type: EVENT
+              Pattern: PUSH
+            - Type: HEAD_REF
+              Pattern: ^refs/heads/(develop|master)
+              ExcludeMatchedPattern: true
+
+  MicroserviceBDevProject:
+    Type: AWS::CodeBuild::Project
+    Properties:
+      Name: microservice-b-dev
+      Description: microservice-b-dev
+      Environment:
+        ComputeType: BUILD_GENERAL1_SMALL
+        ImagePullCredentialsType: CODEBUILD
+        PrivilegedMode: false
+        Image: aws/codebuild/amazonlinux2-x86_64-standard:3.0 #aws/codebuild/python:3.6.5 # More info on Images: https://docs.aws.amazon.com/codebuild/latest/userguide/build-env-ref-available.html
+        Type: LINUX_CONTAINER
+      Artifacts:
+        Type: NO_ARTIFACTS
+      BadgeEnabled: true
+      ServiceRole: !Ref CodeBuildServiceRole
+      Source:
+        BuildSpec: microservice-b/buildspec.yml
+        GitCloneDepth: 1
+        Location: https://github.com/mfolivas/aws-serverless-ci-cd.git
+        ReportBuildStatus: true
+        Type: GITHUB
+      TimeoutInMinutes: 60
+      Triggers:
+        Webhook: true
+        FilterGroups:
+          - - Type: EVENT
+              Pattern: PUSH
+            - Type: HEAD_REF
+              Pattern: ^refs/heads/(develop|master)
+              ExcludeMatchedPattern: true
+
+
+#   ____                  _____            
+#  |  _ \  _____   __    | ____|_ ____   __
+#  | | | |/ _ \ \ / /____|  _| | '_ \ \ / /
+#  | |_| |  __/\ V /_____| |___| | | \ V / 
+#  |____/ \___| \_/      |_____|_| |_|\_/  
+                                         
+
   MicroservicesProjectDev:
     Type: AWS::CodeBuild::Project
     Properties:
@@ -40,6 +119,13 @@ Resources:
         Modes:
           - LOCAL_CUSTOM_CACHE
 
+#   ____                _       _____            
+#  |  _ \ _ __ ___   __| |     | ____|_ ____   __
+#  | |_) | '__/ _ \ / _` |_____|  _| | '_ \ \ / /
+#  |  __/| | | (_) | (_| |_____| |___| | | \ V / 
+#  |_|   |_|  \___/ \__,_|     |_____|_| |_|\_/  
+                                               
+
   MicroservicesProjectProd:
     Type: AWS::CodeBuild::Project
     Properties:
@@ -55,6 +141,7 @@ Resources:
           - Name: STAGE
             Type: PLAINTEXT
             Value: prod
+      Artifacts:
         Type: NO_ARTIFACTS
       BadgeEnabled: true
       ServiceRole: !Ref CodeBuildServiceRole
@@ -76,68 +163,6 @@ Resources:
         Type: LOCAL
         Modes:
           - LOCAL_CUSTOM_CACHE
-  
-  MicroserviceADev:
-    Type: AWS::CodeBuild::Project
-    Properties:
-      Name: microservice-a-dev
-      Description: microservice-a-dev
-      Environment:
-        ComputeType: BUILD_GENERAL1_SMALL
-        ImagePullCredentialsType: CODEBUILD
-        PrivilegedMode: false
-        Image: aws/codebuild/amazonlinux2-x86_64-standard:3.0 #aws/codebuild/python:3.6.5 # More info on Images: https://docs.aws.amazon.com/codebuild/latest/userguide/build-env-ref-available.html
-        Type: LINUX_CONTAINER
-      Artifacts:
-        Type: NO_ARTIFACTS
-      BadgeEnabled: true
-      ServiceRole: !Ref CodeBuildServiceRole
-      Source:
-        BuildSpec: microservice-a/buildspec.yml
-        GitCloneDepth: 1
-        Location: https://github.com/mfolivas/aws-serverless-ci-cd.git
-        ReportBuildStatus: true
-        Type: GITHUB
-      TimeoutInMinutes: 60
-      Triggers:
-        Webhook: true
-        FilterGroups:
-          - - Type: EVENT
-              Pattern: PUSH
-            - Type: HEAD_REF
-              Pattern: ^refs/heads/(develop|master)
-              ExcludeMatchedPattern: true
-
-    MicroserviceBDev:
-    Type: AWS::CodeBuild::Project
-    Properties:
-      Name: microservice-b-dev
-      Description: microservice-b-dev
-      Environment:
-        ComputeType: BUILD_GENERAL1_SMALL
-        ImagePullCredentialsType: CODEBUILD
-        PrivilegedMode: false
-        Image: aws/codebuild/amazonlinux2-x86_64-standard:3.0 #aws/codebuild/python:3.6.5 # More info on Images: https://docs.aws.amazon.com/codebuild/latest/userguide/build-env-ref-available.html
-        Type: LINUX_CONTAINER
-      Artifacts:
-        Type: NO_ARTIFACTS
-      BadgeEnabled: true
-      ServiceRole: !Ref CodeBuildServiceRole
-      Source:
-        BuildSpec: microservice-b/buildspec.yml
-        GitCloneDepth: 1
-        Location: https://github.com/mfolivas/aws-serverless-ci-cd.git
-        ReportBuildStatus: true
-        Type: GITHUB
-      TimeoutInMinutes: 60
-      Triggers:
-        Webhook: true
-        FilterGroups:
-          - - Type: EVENT
-              Pattern: PUSH
-            - Type: HEAD_REF
-              Pattern: ^refs/heads/(develop|master)
-              ExcludeMatchedPattern: true
   
   CodeBuildServiceRole:
     Type: AWS::IAM::Role
