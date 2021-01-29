@@ -18,7 +18,8 @@ test() {
   # Execute tests only when deploying to DEV.
   if [[ $STAGE == "dev" ]]
   then
-    source .envrc && npm test
+    # source .envrc && npm test
+    npm test
   fi
 }
 
@@ -30,12 +31,12 @@ deploy() {
 
 # Running checks in all projects
 check microservice-a
-check microservice-b
+# check microservice-b
 
 # Running test as long as we're in stage
 test microservice-a
-test microservice-b
+# test microservice-b
 
 # Deploy all projects
 deploy microservice-a
-deploy microservice-b
+# deploy microservice-b
